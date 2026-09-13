@@ -1,5 +1,4 @@
+# core dependencies
 pandas
 sqlalchemy
 requests
-pytest
-ruff

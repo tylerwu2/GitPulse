@@ -1,5 +1,6 @@
 import requests
 
+
 def fetch_data(url: str):
     response = requests.get(url, timeout=30)
     # automatically throws HTTPException if error occurs

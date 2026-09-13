@@ -1,7 +1,6 @@
-from ingest import fetch_data
-from transform import transform_data, convert_to_df, transform_pull_request_data
-from load import load_data, load_pull_request_data
 from github import get_pull_requests
+from load import load_pull_request_data
+from transform import convert_to_df, transform_pull_request_data
 
 
 def run():
@@ -9,7 +8,7 @@ def run():
     records = transform_pull_request_data(pull_data)
     df = convert_to_df(records)
     # load data to database
-    load_
+    load_pull_request_data(df)
 
 if __name__ == "__main__":
     run()
