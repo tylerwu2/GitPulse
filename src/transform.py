@@ -17,8 +17,8 @@ def transform_pull_request_data(pull_data):
 
     for pr in pull_data:
         transformed.append({
-            "id" : pull_data["id"],
-            "number" : pull_data["number"],
+            "id" : pr["id"],
+            "number" : pr["number"],
             "title": pr["title"],
             "author": pr["user"]["login"],
             "state": pr["state"],
