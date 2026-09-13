@@ -8,7 +8,7 @@ def get_pull_requests(owner, repo, page=1):
     params = {
         "state" : "all",
         "per_page" : 100,
-        "page" : 1
+        "page" : page
     }
 
     response = requests.get(url, params = params)
