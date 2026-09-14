@@ -19,6 +19,7 @@ def transform_pull_request_data(pull_data):
         transformed.append(
             {
                 "id": pr["id"],
+                "repository_id": pr["repostiory_id"],
                 "number": pr["number"],
                 "title": pr["title"],
                 "author": pr["user"]["login"],

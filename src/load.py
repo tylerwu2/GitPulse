@@ -1,12 +1,25 @@
-from sqlalchemy import create_engine
+from sqlalchemy import text
 
 
-def load_data(df, database_url, table_name):
-    engine = create_engine(database_url)
+def load_pull_request_data(conn, data, database_url, table_name):
+    return None
 
-    df.to_sql(table_name, engine, if_exists="append", index=False)
+def load_repository(conn, repo_id):
+    conn.execute(
+        text("""
+            INSERT INTO repositories (id, owner, name, url)
+            VALUES (:id, :owner, :name, :url)
+            ON CONFLICT (id)
+            DO UPDATE SET
+                owner = EXCLUDED.owner,
+                name = EXCLUDED.name,
+                url = EXCLUDED.url
+            """),
+            repo_id
+    )
 
+def load_reviews():
+    return None
 
-def load_pull_request_data(df, database_url, table_name):
-    engine = create_engine(database_url)
-    df.to_sql(table_name, engine, if_exists="append", index=False)
+def load_commits():
+    return None
