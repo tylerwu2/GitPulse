@@ -1,7 +1,8 @@
 from sqlalchemy import text
 
 
-def load_pull_request_data(conn, data, database_url, table_name):
+def load_pull_request_data(conn, data):
+    
     return None
 
 def load_repository(conn, repo_id):

@@ -1,6 +1,3 @@
-import pandas as pd
-
-
 def transform_data(raw_data):
     records = []
 
@@ -11,15 +8,23 @@ def transform_data(raw_data):
 
     return records
 
+def transform_repository_data(repo_data):
+    return {
+        "id": repo_data["id"],
+        "owner": repo_data["owner"]["login"],
+        "name": repo_data["name"],
+        "url": repo_data["html_url"],
+    }
 
-def transform_pull_request_data(pull_data):
+
+def transform_pull_request_data(pull_data, repo_id):
     transformed = []
 
     for pr in pull_data:
         transformed.append(
             {
                 "id": pr["id"],
-                "repository_id": pr["repostiory_id"],
+                "repository_id": repo_id,
                 "number": pr["number"],
                 "title": pr["title"],
                 "author": pr["user"]["login"],
@@ -32,7 +37,3 @@ def transform_pull_request_data(pull_data):
         )
 
     return transformed
-
-
-def convert_to_df(data):
-    return pd.DataFrame(data)
