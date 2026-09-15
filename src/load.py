@@ -16,7 +16,6 @@ def load_pull_request_data(conn, data):
         """),
         data,
     )
-    return None
 
 def load_repository(conn, repo_id):
     conn.execute(
