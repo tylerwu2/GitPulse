@@ -17,7 +17,7 @@ def load_pull_request_data(conn, data):
         data,
     )
 
-def load_repository(conn, repo_id):
+def load_repository(conn, repository):
     conn.execute(
         text("""
             INSERT INTO repositories (id, owner, name, url)
@@ -28,7 +28,7 @@ def load_repository(conn, repo_id):
                 name = EXCLUDED.name,
                 url = EXCLUDED.url
             """),
-            repo_id
+            repository,
     )
 
 def load_reviews():
