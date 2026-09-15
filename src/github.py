@@ -20,3 +20,15 @@ def get_pull_requests(owner, repo, page=1):
     response.raise_for_status()
     data = response.json()
     return data
+
+def get_all_pull_requests(owner, repo):
+    page = 1
+    all_pull_requests = []
+
+    while True:
+        data = get_pull_requests(owner, repo)
+        if not data:
+            break
+        all_pull_requests.extend(data)
+        page += 1
+    return all_pull_requests

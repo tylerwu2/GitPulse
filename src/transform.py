@@ -1,13 +1,3 @@
-def transform_data(raw_data):
-    records = []
-
-    for item in raw_data["features"]:
-
-        records.append({"id": item["id",]})
-        records.append({"properties": item["properties"]})
-
-    return records
-
 def transform_repository_data(repo_data):
     return {
         "id": repo_data["id"],

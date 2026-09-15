@@ -1,48 +1,71 @@
-from src.transform import convert_to_df, transform_pull_request_data
+from src.transform import (
+    transform_pull_request_data,
+    transform_repository_data,
+)
 
 
-def test_convert_to_df():
-    data = [{"id": 1, "title": "First"}, {"id": 2, "title": "Second"}]
+def test_transform_repository_data():
+    raw_repository = {
+        "id": 12345,
+        "name": "react",
+        "html_url": "https://github.com/facebook/react",
+        "owner": {
+            "login": "facebook"
+        },
+    }
 
-    df = convert_to_df(data)
+    result = transform_repository_data(raw_repository)
 
-    assert len(df) == 2
-    assert list(df.columns) == ["id", "title"]
-
-
-def test_convert_to_df_empty():
-    df = convert_to_df([])
-
-    assert df.empty
+    assert result == {
+        "id": 12345,
+        "owner": "facebook",
+        "name": "react",
+        "url": "https://github.com/facebook/react",
+    }
 
 
 def test_transform_pull_request_data():
-    data = [
+    raw_pull_requests = [
         {
-            "id": 123,
-            "number": 1,
+            "id": 100,
+            "number": 42,
             "title": "Fix bug",
-            "state": "closed",
-            "user": {"login": "bob"},
+            "user": {
+                "login": "alice"
+            },
+            "state": "open",
             "created_at": "2026-09-01T10:00:00Z",
             "updated_at": "2026-09-02T10:00:00Z",
-            "closed_at": "2026-09-02T09:00:00Z",
-            "merged_at": "2026-09-02T09:30:00Z",
+            "closed_at": None,
+            "merged_at": None,
         }
     ]
 
-    transformed_data = transform_pull_request_data(data)
+    result = transform_pull_request_data(
+        raw_pull_requests,
+        repository_id=12345,
+    )
 
-    assert transformed_data == [
+    assert result == [
         {
-            "id": 123,
-            "number": 1,
+            "id": 100,
+            "repository_id": 12345,
+            "number": 42,
             "title": "Fix bug",
-            "author": "bob",
-            "state": "closed",
+            "author": "alice",
+            "state": "open",
             "created_at": "2026-09-01T10:00:00Z",
             "updated_at": "2026-09-02T10:00:00Z",
-            "closed_at": "2026-09-02T09:00:00Z",
-            "merged_at": "2026-09-02T09:30:00Z",
+            "closed_at": None,
+            "merged_at": None,
         }
     ]
+
+
+def test_transform_pull_request_data_empty():
+    result = transform_pull_request_data(
+        [],
+        repository_id=12345,
+    )
+
+    assert result == []
