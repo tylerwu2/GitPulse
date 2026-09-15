@@ -69,3 +69,38 @@ def test_transform_pull_request_data_empty():
     )
 
     assert result == []
+
+def test_transform_multiple_pull_requests():
+    raw_pull_requests = [
+        {
+            "id": 100,
+            "number": 1,
+            "title": "First PR",
+            "user": {"login": "alice"},
+            "state": "open",
+            "created_at": "2026-09-01T10:00:00Z",
+            "updated_at": "2026-09-01T10:00:00Z",
+            "closed_at": None,
+            "merged_at": None,
+        },
+        {
+            "id": 101,
+            "number": 2,
+            "title": "Second PR",
+            "user": {"login": "bob"},
+            "state": "closed",
+            "created_at": "2026-09-01T11:00:00Z",
+            "updated_at": "2026-09-02T11:00:00Z",
+            "closed_at": "2026-09-02T11:00:00Z",
+            "merged_at": None,
+        },
+    ]
+
+    result = transform_pull_request_data(
+        raw_pull_requests,
+        repository_id=12345,
+    )
+
+    assert len(result) == 2
+    assert result[0]["repository_id"] == 12345
+    assert result[1]["repository_id"] == 12345
