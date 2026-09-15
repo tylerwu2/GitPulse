@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS repositories (
     name TEXT NOT NULL,
     url TEXT NOT NULL,
     UNIQUE(owner, name)
-)
+);
 
 CREATE TABLE IF NOT EXISTS pull_requests (
     id BIGINT PRIMARY KEY,
@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS pull_requests (
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     closed_at TIMESTAMP,
-    merged_at TIMESTAMP
+    merged_at TIMESTAMP,
     UNIQUE(repository_id, number)
 );
